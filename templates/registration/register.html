@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+    {% load widget_tweaks %}
+    <div class="columns">
+        <div class="column col-6 col-mx-auto">
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    {{ form.non_field_errors }}
+                    {{ form.username.errors }}
+                    <label for="{{ form.username.id_for_label }}">Username:</label>
+                    {% render_field form.username class+="form-input" %}
+                    {{ form.password1.errors }}
+                    <label for="{{ form.password1.id_for_label }}">Password:</label>
+                    {% render_field form.password1 class+="form-input" %}
+                    {{ form.password2.errors }}
+                    <label for="{{ form.password2.id_for_label }}">Confirm Password:</label>
+                    {% render_field form.password2 class+="form-input" %}
+                    <button class="btn btn-primary mt-2" type="submit">Register</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

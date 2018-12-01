@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="columns">
+        <div class="column col-6 col-mx-auto">
+
+            <form method="post" action="{% url 'student-profile-setup' setup_stage %}" enctype="multipart/form-data">
+                <ul class="step">
+                    {% if setup_stage == 0 %}
+                        <li class="step-item active">
+                            <a href="#" class="tooltip" data-tooltip="Basic Information">Step 1</a>
+                        </li>
+                    {% else %}
+                        <li class="step-item">
+                            <a href="#" class="tooltip" data-tooltip="Basic Information">Step 1</a>
+                        </li>
+                    {% endif %}
+
+                    {% if setup_stage == 1 %}
+                        <li class="step-item active">
+                            <a href="#" class="tooltip" data-tooltip="Profile Details">Step 2</a>
+                        </li>
+                    {% else %}
+                        <li class="step-item">
+                            <a href="#" class="tooltip" data-tooltip="Profile Details">Step 2</a>
+                        </li>
+                    {% endif %}
+                    {% if setup_stage == 2 %}
+                        <li class="step-item active">
+                            <a href="#" class="tooltip" data-tooltip="Avatar">Step 3</a>
+                        </li>
+                    {% else %}
+                        <li class="step-item">
+                            <a href="#" class="tooltip" data-tooltip="Avatar">Step 3</a>
+                        </li>
+                    {% endif %}
+
+                </ul>
+                <div class="form-group">
+                    {% csrf_token %}
+                    {% if error %}
+                        <div class="toast-error">
+                            {{ error }}
+                            <button class="btn btn-clear float-right"></button>
+                        </div>
+                    {% endif %}
+                    {% include "profiles/basic_setup.html" %}
+
+                    {% if setup_stage > 0 %}
+                        <button type="submit" value="previous" name="action" class="btn btn-primary mt-2">Previous</button>
+                    {% endif %}
+                    {% if setup_stage == 2 %}
+                        <button type="submit" value="next" name="action" class="btn btn-primary mt-2">Save Profile</button>
+                    {% else %}
+                        <button type="submit" value="next" name="action" class="btn btn-primary mt-2">Next</button>
+                    {% endif %}
+                </div>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}
