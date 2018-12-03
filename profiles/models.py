@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+from djmoney.models.fields import MoneyField
 
 # Create your models here.
 
@@ -20,7 +21,11 @@ class StudentProfile(models.Model):
     dob = models.DateField()
     hs_grad_year = models.IntegerField()
     college_grad_year = models.IntegerField()
-    tuition_goal = models.IntegerField()
+    tuition_goal = MoneyField(max_digits=19, decimal_places=2, default_currency='USD')
+    tuition_raised = MoneyField(max_digits=19, decimal_places=2, default_currency='USD')
+
+    def get_tuition_remaining(self):
+        return self.tuition_goal - self.tuition_raised
 
 
 class OrganizationProfile(models.Model):
@@ -43,6 +48,14 @@ class Profile(models.Model):
         (DONOR, "Donor")
     )
     profile_type = models.CharField(max_length=1, choices=PROFILE_TYPE_CHOICES, default=ADMIN)
-    student_profile = models.OneToOneField(StudentProfile, on_delete=models.SET_NULL, default=None, blank=True, null=True)
-    organization_profile = models.ForeignKey(OrganizationProfile, on_delete=models.SET_NULL, default=None, blank=True, null=True)
+    student_profile = models.OneToOneField(StudentProfile,
+                                           on_delete=models.SET_NULL,
+                                           default=None,
+                                           blank=True,
+                                           null=True)
+    organization_profile = models.ForeignKey(OrganizationProfile,
+                                             on_delete=models.SET_NULL,
+                                             default=None,
+                                             blank=True,
+                                             null=True)
 

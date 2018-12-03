@@ -9,5 +9,5 @@ class IndexView(TemplateView):
 
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-            return redirect('profile')
+            return redirect('user-home')
         return super(TemplateView, self).dispatch(request, *args, **kwargs)

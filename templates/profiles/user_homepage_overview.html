@@ -1,0 +1,38 @@
+{% extends "profiles/user_homepage.html" %}
+{% block homepage_content %}
+    {% if profile.student_profile %}
+        <h3 class="top-margin-s">
+            My Progress:
+        </h3>
+        <div class="bar">
+            <div class="bar-item" role="progressbar" style="width:25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+        <div class="mt-1">
+            My Goal: {{ profile.student_profile.tuition_goal }} |
+            Amount Raised: {{ profile.student_profile.tuition_raised }} |
+            Amount Remaining: {{ profile.student_profile.get_tuition_remaining }}
+        </div>
+        <h3 class="top-margin-s">
+            Raise More:
+        </h3>
+        <div class="columns">
+            <div class="column col-4">
+                <a href="#" class="btn btn-primary top-margin-s bottom-margin-m">Scholarships</a>
+            </div>
+            <div class="column col-4">
+                <a href="#" class="btn btn-primary top-margin-s bottom-margin-m">Tasks</a>
+            </div>
+            <div class="column col-4">
+                <a href="#" class="btn btn-primary top-margin-s bottom-margin-m">Financing</a>
+            </div>
+        </div>
+    {% else %}
+        It looks like you haven't finished setting up your profile. Head here to finish up:
+        <form method="post" action="{% url "student-profile-setup" setup_stage=3 %}">
+            {% csrf_token %}
+            <input type="hidden" name="profile_id" value="{{ profile.id }}">
+            <input type="hidden" name="resume" value="true">
+            <button type="submit" class="btn btn-primary vertical-margins-xl">Finish My Profile</button>
+        </form>
+    {% endif %}
+{% endblock %}
