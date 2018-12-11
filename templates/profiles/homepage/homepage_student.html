@@ -1,0 +1,26 @@
+{% extends "profiles/homepage/homepage_base.html" %}
+{% block homepage_header %}
+    <div class="panel-title mt-2">
+        <h2>
+            {{ profile.get_full_name }}
+        </h2>
+    </div>
+{% endblock %}
+{% block homepage_nav %}
+    {% include "profiles/homepage/homepage_student_nav.html" %}
+{% endblock %}
+{% block homepage_content %}
+    {% if tab == "overview" %}
+        {% include "profiles/homepage/student_tabs/overview.html" %}
+    {% elif tab == "saved_scholarships"%}
+        {% include "profiles/homepage/student_tabs/saved_scholarships.html" %}
+    {% elif tab == "applications" %}
+        {% include "profiles/homepage/student_tabs/applications.html" %}
+    {% elif tab == "responses" %}
+        {% include "profiles/homepage/student_tabs/responses.html" %}
+    {% elif tab == "my_information" %}
+        {% include "profiles/homepage/student_tabs/my_information.html" %}
+    {% else %}
+        Server error, invalid tab.
+    {% endif %}
+{% endblock %}

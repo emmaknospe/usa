@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="columns">
+        <div class="column col-3 m-2">
+            <div class="menu">
+                <h5 class="text-center">Search</h5>
+                <div class="divider" data-content="OPTIONS"></div>
+                <div class="menu-item">
+                    <form id="id_search_form">
+                        <div class="form-group">
+                            <label for="id_search">Title:</label>
+                            <input id="id_search" type="text" class="form-input" name="title" value="{{ title }}">
+                            <label for="id_key_words" class="form-label">Key Words:</label>
+                            <input id="id_key_words" type="text" class="form-input" name="key_words" value="{{ key_words }}">
+                            <label for="id_field" class="form-label">Fields:</label>
+                            <div class="form-input" style="height:120px; overflow: scroll;">
+                                {% for option in zipped_disciplines %}
+                                    <label class="form-checkbox">
+                                        <input type="checkbox" name="{{ option.name }}" value="true"
+                                        {% if option.on %}
+                                            checked
+                                        {% endif %}
+                                        >
+                                        <i class="form-icon"></i> {{ option.name }}
+                                    </label>
+                                {% endfor %}
+                            </div>
+                            <button type="submit" name="view" value="{{ view }}" class="btn btn-primary mt-2">Search</button>
+                            <button type="submit" class="btn btn-link float-right mt-2" name="view"
+                                    value="{% if view == "card" %}list{% else %}card{% endif %}">
+                                {% if view == "card" %}
+                                    Use List View
+                                {% else %}
+                                    Use Card View
+                                {% endif %}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="column col-8 m-2">
+            {% if tile %}
+                {% for scholarship in scholarships %}
+                    {% include "scholarships/scholarship_tile.html" %}
+                    {% if not forloop.last %}
+                        <div class="divider"></div>
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                <div class="columns">
+                    {% for scholarship in scholarships %}
+                        <div class="column col-4">
+                            {% include "scholarships/scholarship_card.html" %}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

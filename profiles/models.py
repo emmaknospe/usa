@@ -3,6 +3,7 @@ from django.db import models
 from djmoney.models.fields import MoneyField
 
 # Create your models here.
+from usa import settings
 
 
 class StudentProfile(models.Model):
@@ -28,16 +29,28 @@ class StudentProfile(models.Model):
         return self.tuition_goal - self.tuition_raised
 
 
-class OrganizationProfile(models.Model):
-    organization = models.CharField(max_length=30)
+class DonorProfile(models.Model):
+    organization_name = models.CharField(max_length=30)
+    logo_picture = models.ImageField(upload_to="images", null=True)
+    description_text = models.CharField(max_length=2000)
+    INDIVIDUAL = "I"
+    BUSINESS = "B"
+    FOUNDATION = "F"
+    DONOR_TYPE_CHOICES = (
+        (INDIVIDUAL, "Individual"),
+        (BUSINESS, "Business"),
+        (FOUNDATION, "Foundation")
+    )
+    donor_type = models.CharField(max_length=1, choices=DONOR_TYPE_CHOICES, default=BUSINESS)
 
 
 class Profile(models.Model):
     first_name = models.CharField(max_length=20)
     last_name = models.CharField(max_length=20)
     email = models.CharField(max_length=40)
-    profile_picture = models.ImageField(upload_to="images")
-    user = models.OneToOneField(User, on_delete=models.SET_NULL, null=True, related_name="profile")
+    visible = models.BooleanField(default=True)
+    profile_picture = models.ImageField(upload_to="images", null=True)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, related_name="profile")
     profile_text = models.CharField(max_length=2000)
     STUDENT = "S"
     ADMIN = "A"
@@ -53,9 +66,7 @@ class Profile(models.Model):
                                            default=None,
                                            blank=True,
                                            null=True)
-    organization_profile = models.ForeignKey(OrganizationProfile,
-                                             on_delete=models.SET_NULL,
-                                             default=None,
-                                             blank=True,
-                                             null=True)
+
+    def get_full_name(self):
+        return self.first_name + " " + self.last_name
 

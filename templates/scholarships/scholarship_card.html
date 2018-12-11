@@ -1,0 +1,32 @@
+<!-- For displaying scholarships in a list -->
+{# TODO: AUTHORIZATION FOR ACTIONS #}
+
+<div class="card mb-1 mt-1">
+    <div class="card-header">
+        <div class="card-title h5">{{ scholarship.title }}</div>
+        <div class="card-subtitle mt-2" style="overflow-x:auto;white-space: nowrap;">
+            {% for field in scholarship.fields.all %}
+                <span class="chip bg-secondary">{{ field.field_name }}</span>
+            {% endfor %}
+            {% for key_word in scholarship.key_words.all %}
+                <span class="chip bg-secondary">{{ key_word.key_word }}</span>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="card-body" style="height:100px;">
+        {{ scholarship.short_description }}
+    </div>
+    <div class="card-footer">
+        {% if user.get_role == "DONOR" %}
+            {% if user.authorized_donor_profile == scholarship.organization %}
+                <a class="btn btn-primary" href="{% url "view-scholarship" scholarship_id=scholarship.id %}">View</a>
+                <a class="btn btn-primary">Edit</a>
+                <a class="btn btn-primary">Delete</a>
+            {% endif %}
+        {% elif user.get_role == "STUDENT" %}
+            <a class="btn btn-primary" href="{% url "view-scholarship" scholarship_id=scholarship.id %}">View</a>
+        {% elif user.get_role == "ADMIN" %}
+            {# TODO: Admin actions #}
+        {% endif %}
+    </div>
+</div>

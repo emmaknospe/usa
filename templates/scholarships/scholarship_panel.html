@@ -1,0 +1,44 @@
+{% load djmoney %}
+<div class="panel">
+    <div class="panel-header">
+        <table class="table">
+            <tr>
+                <td>
+                    <h5>{{ scholarship.title }}</h5>
+                </td>
+                <td>
+                    <span class="float-right">
+                        <h5>$100.00 <!--TODO: make this display the actual money amount--></h5>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td>Subjects:</td>
+                <td>
+                    <span class="float-right">
+                        {% for field in scholarship.fields.all %}
+                            <span class="chip">{{ field.field_name }}</span>
+                        {% endfor %}
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td>Key Words:</td>
+                <td>
+                    <span class="float-right">
+                        {% for key_word in scholarship.key_words.all %}
+                            <span class="chip">{{ key_word.key_word }}</span>
+                        {% endfor %}
+                    </span>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="panel-body">
+        {{ scholarship.description }}
+    </div>
+
+    <div class="panel-footer">
+        <button class="btn btn-primary">Apply</button>
+    </div>
+</div>

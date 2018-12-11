@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="columns">
+        <div class="column col-6 col-mx-auto">
+            <form action="{% url "process-setup-organization" %}" enctype="multipart/form-data" method="post">
+                <div class="form-group">
+                    {% csrf_token %}
+                    <label for="id_organization_name" class="form-label">Organization Name:</label>
+                    <input id="id_organization_name" name="organization_name" type="text" class="form-input">
+                    <label for="id_donor_type" class="form-label">Organization Type:</label>
+                    <select id="id_donor_type" class="form-select" name="donor_type">
+                        <option value="I">Individual</option>
+                        <option value="B" selected="selected">Business</option>
+                        <option value="F">Foundation</option>
+                    </select>
+                    <label for="id_description_text" class="form-label">Description:</label>
+                    <textarea id="id_description_text" name="description_text" class="form-input"></textarea>
+                    <label for="id_logo_picture" class="form-label">Logo:</label>
+                    <input type="file" class="form-input" name="logo_picture">
+                    <button class="btn btn-primary mt-2" type="submit">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

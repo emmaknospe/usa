@@ -1,0 +1,74 @@
+{% extends 'authorized.html' %}
+{% block authorized_content %}
+    <div class="columns">
+        <div class="column col-6 col-mx-auto">
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <input type="hidden" name="key_words_string_list" value="{{ key_words_string_list }}">
+                    <input type="hidden" name="fields_string_list" value="{{ fields_string_list }}">
+                    <label for="id_title" class="form-label">Title:</label>
+                    <input id="id_title" type="text" name="title" class="form-input"
+                           value="{{ title }}">
+                    <label for="id_required_gpa" class="form-label">Required GPA:</label>
+                    <input id="id_required_gpa" type="text" name="required_gpa" class="form-input"
+                           value="{{ required_gpa }}">
+                    <label for="id_amount" class="form-label">Amount:</label>
+                    <input id="id_amount" type="text" name="amount" class="form-input"
+                           value="{{ amount }}">
+                    <div>
+                        <label for="id_key_words_text_input" class="form-label">Key Words:</label>
+                        <div>
+                            {% for key_word in key_words %}
+                                <span class="chip">
+                                    {{ key_word }}
+                                    <button class="btn btn-clear" type="submit" name="delete_key_word" value="{{ key_word }}">
+                                    </button>
+                                </span>
+                            {% endfor %}
+                        </div>
+                        <div class="input-group">
+                            <input id="id_key_words_text_input" type="text" name="new_key_word" class="form-input">
+                            <button class="btn btn-primary input-group-btn" name="action" value="add_key_word" type="submit">
+                                Add Key Word
+                            </button>
+                        </div>
+                    </div>
+                    <div class="mt-2">
+                        <label for="id_fields_text_input" class="form-label">Academic Fields:</label>
+                        <div>
+                            {% for field in fields %}
+                                <span class="chip">
+                                    {{ field }}
+                                    <button class="btn btn-clear" type="submit" name="delete_field" value="{{ field }}">
+                                    </button>
+                                </span>
+                            {% endfor %}
+                        </div>
+                        <div class="input-group">
+                            <select id="id_fields_text_input" class="form-select" name="new_field">
+                                {% for academic_discipline in ACADEMIC_DISCIPLINES %}
+                                    <option value="{{ academic_discipline }}">
+                                        {{ academic_discipline }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                            <button class="btn btn-primary input-group-btn" name="action" value="add_field" type="submit">
+                                Add Field
+                            </button>
+                        </div>
+                    </div>
+                    <label for="id_description">Description:</label>
+                    <textarea id="id_description" class="form-input" name="description">{{ description }}</textarea>
+                    <button class="btn btn-primary input-group-btn mt-2" name="action" value="submit_form" type="submit">
+                        Submit
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}
+{% block unauthorized_content %}
+    Sorry, you're not authorized to add a scholarship to this organization.
+{% endblock %}

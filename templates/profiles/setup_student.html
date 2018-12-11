@@ -3,7 +3,7 @@
     <div class="columns">
         <div class="column col-6 col-mx-auto">
 
-            <form method="post" action="{% url 'student-profile-setup' setup_stage %}" enctype="multipart/form-data">
+            <form method="post" action="{% url 'setup-student' setup_stage %}" enctype="multipart/form-data">
                 <ul class="step">
                     {% if setup_stage == 0 %}
                         <li class="step-item active">

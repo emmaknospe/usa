@@ -1,0 +1,25 @@
+<!-- For displaying scholarships in a list -->
+{# TODO: AUTHORIZATION FOR ACTIONS #}
+
+<div class="tile" style="display: table; width: 100%;">
+    <div class="tile-content">
+        <p class="tile-title"><h5>{{ scholarship.title }}</h5></p>
+        <p class="tile-subtitle">
+            {% for field in scholarship.fields.all %}
+                <span class="chip bg-secondary">{{ field.field_name }}</span>
+            {% endfor %}
+            {% for key_word in scholarship.key_words.all %}
+                <span class="chip bg-secondary">{{ key_word.key_word }}</span>
+            {% endfor %}
+        </p>
+    </div>
+    <div class="tile-action p-2" style="height:100%; width: 40px; vertical-align: middle; display: table-cell;">
+        <button class="btn btn-primary">View</button>
+    </div>
+    <div class="tile-action p-2" style="height:100%; width: 40px; vertical-align: middle; display: table-cell;">
+        <button class="btn btn-primary">Edit</button>
+    </div>
+    <div class="tile-action p-2" style="height:100%; width: 40px; vertical-align: middle; display: table-cell;">
+        <button class="btn btn-primary">Delete</button>
+    </div>
+</div>
