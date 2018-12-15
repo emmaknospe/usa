@@ -27,12 +27,18 @@
                                 </span>
                             {% endfor %}
                         </div>
-                        <div class="input-group">
-                            <input id="id_key_words_text_input" type="text" name="new_key_word" class="form-input">
-                            <button class="btn btn-primary input-group-btn" name="action" value="add_key_word" type="submit">
-                                Add Key Word
-                            </button>
+                        <div class="key-word-autocomplete">
+                            <div class="input-group">
+                                <input id="id_key_words_text_input" type="text" name="new_key_word" autocomplete="off" class="form-input key-word-autocomplete-input">
+                                <button class="btn btn-primary input-group-btn" name="action" value="add_key_word" type="submit">
+                                    Add Key Word
+                                </button>
+                            </div>
+                            <div class="key-word-autocomplete-menu">
+
+                            </div>
                         </div>
+
                     </div>
                     <div class="mt-2">
                         <label for="id_fields_text_input" class="form-label">Academic Fields:</label>

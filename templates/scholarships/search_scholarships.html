@@ -11,7 +11,14 @@
                             <label for="id_search">Title:</label>
                             <input id="id_search" type="text" class="form-input" name="title" value="{{ title }}">
                             <label for="id_key_words" class="form-label">Key Words:</label>
-                            <input id="id_key_words" type="text" class="form-input" name="key_words" value="{{ key_words }}">
+                            <div class="key-word-autocomplete">
+                                <input id="id_key_words" autocomplete="off" type="text"
+                                       class="form-input key-word-autocomplete-input"
+                                       name="key_words" value="{{ key_words }}">
+                                <div class="key-word-autocomplete-menu">
+
+                                </div>
+                            </div>
                             <label for="id_field" class="form-label">Fields:</label>
                             <div class="form-input" style="height:120px; overflow: scroll;">
                                 {% for option in zipped_disciplines %}

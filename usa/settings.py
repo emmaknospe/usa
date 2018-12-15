@@ -41,8 +41,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'accounts.apps.AccountsConfig',
-    'widget_tweaks',
-    'djmoney'
+    'widget_tweaks',  # enables tweaking form rendering in templates TODO: Assess whether still necessary
+    'djmoney',  # handles storing values corresponding to amounts of money in database properly
+    'django_js_reverse',  # handles reversing django shortened urls in javascript
 ]
 
 MIDDLEWARE = [
@@ -129,6 +130,8 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
+
+STATIC_ROOT = "collected_static/"  # TODO: unfuck this fuckery
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
