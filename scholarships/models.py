@@ -1,6 +1,7 @@
 from django.db import models
 from djmoney.forms import MoneyField
 
+from applications.models import Application
 from profiles.models import DonorProfile
 
 
@@ -10,47 +11,6 @@ class KeyWord(models.Model):
 
 class AcademicField(models.Model):
     field_name = models.CharField(max_length=20, primary_key=True)
-
-
-class MultipleChoiceQuestion(models.Model):
-    question_text = models.CharField(max_length=300)
-
-
-class MultipleChoiceQuestionOption(models.Model):
-    answer_text = models.CharField(max_length=40)
-    multiple_choice_question = models.ForeignKey(MultipleChoiceQuestion, on_delete=models.CASCADE)
-
-
-class ShortAnswerQuestion(models.Model):
-    question_text = models.CharField(max_length=300)
-
-
-class FileSubmitQuestion(models.Model):
-    question_text = models.CharField(max_length=300)
-
-
-class DataEntryQuestion(models.Model):
-    question_text = models.CharField(max_length=300)
-
-
-class Application(models.Model):
-    pass
-
-
-class Question(models.Model):
-    MULTIPLE_CHOICE = "MC"
-    SHORT_ANSWER = "SA"
-    FILE_SUBMIT = "FS"
-    DATA_ENTRY = "DA"
-    QUESTION_TYPE_CHOICES = (
-        (MULTIPLE_CHOICE, "Multiple Choice"),
-        (SHORT_ANSWER, "Short Answer"),
-        (FILE_SUBMIT, "File Submit"),
-        (DATA_ENTRY, "Data Entry")
-    )
-    question_type = models.CharField(max_length=2, choices=QUESTION_TYPE_CHOICES)
-    order = models.CharField(max_length=20)  # used to define order of questions lexicographically
-    application = models.ForeignKey(Application, on_delete=models.CASCADE)
 
 
 class Scholarship(models.Model):

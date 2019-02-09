@@ -1,4 +1,6 @@
 {% load djmoney %}
+{% load scholarship_permission_tags %}
+{% get_user_can_edit_scholarship user scholarship as user_can_edit_scholarship %}
 <div class="panel">
     <div class="panel-header">
         <table class="table">
@@ -35,10 +37,46 @@
         </table>
     </div>
     <div class="panel-body">
-        {{ scholarship.description }}
+        <p>
+            {{ scholarship.description }}
+        </p>
+        {% if user_can_edit_scholarship %}
+            {% if scholarship.visible %}
+            {% else %}
+                <p>
+                    This scholarship is not currently visible.
+                    To make this scholarship visible,
+                    {% if scholarship.application %}
+                        click the "launch" button below.
+                    {% else %}
+                        create an application process below.
+                    {% endif %}
+                </p>
+            {% endif %}
+        {% endif %}
     </div>
-
     <div class="panel-footer">
-        <button class="btn btn-primary">Apply</button>
+        {% if scholarship.visible %}
+            {% if user.get_role == STUDENT %}
+                <a class="btn btn-primary" href="{% url "apply" scholarship_id=scholarship.id %}">Apply</a>
+            {% elif user_can_edit_scholarship %}
+                <a class="btn btn-primary" href="{% url "retract-scholarship" scholarship_id=scholarship.id %}">Retract Scholarship</a>
+            {% endif %}
+        {% else %}
+            {% if user_can_edit_scholarship %}
+                {% if scholarship.application %}
+                    <a class="btn btn-primary" href="{% url "create-application" scholarship_id=scholarship.id %}">
+                        Edit Application
+                    </a>
+                    <a class="btn btn-primary" href="{% url "launch-scholarship" scholarship_id=scholarship.id %}">
+                        Launch Scholarship
+                    </a>
+                {% else %}
+                    <a class="btn btn-primary" href="{% url "create-application" scholarship_id=scholarship.id %}">
+                        Create Application
+                    </a>
+                {% endif %}
+            {% endif %}
+        {% endif %}
     </div>
 </div>

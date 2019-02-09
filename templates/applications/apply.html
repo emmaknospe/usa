@@ -1,0 +1,34 @@
+{% extends 'authorized.html' %}
+{% block authorized_header_content %}
+    {% load static %}
+    <script type="text/javascript">
+        window.CSRF_TOKEN = "{{ csrf_token }}";
+        window.APPLICATION_ID = {{ application.id }};
+    </script>
+{% endblock %}
+{% block unauthorized_header_content %}
+{% endblock %}
+{% block authorized_content %}
+    <div class="columns">
+        <div class="column col-8 col-mx-auto">
+            <h5>Applying to {{ scholarship.title }}</h5>
+            <form action="{% url "submit-application" application_id=application.id %}" method="post"
+                  enctype="multipart/form-data">
+                {% csrf_token %}
+                <div id="questions-area">
+                    {% for question in questions %}
+                        {% include question.get_display_template with question=question editing=False %}
+                    {% endfor %}
+                    {% if not questions %}
+                        <p>There aren't any questions in this application!</p>
+                    {% endif %}
+                </div>
+                <button class="btn btn-primary" type="submit">Submit Application</button>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}
+{% block unauthorized_content %}
+    Sorry, you're not authorized to add an application to this scholarship.
+{% endblock %}
