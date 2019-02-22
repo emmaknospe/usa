@@ -82,30 +82,36 @@
                             {% endif %}
                         </select>
                         <label for="id_school" class="form-label">My School:</label>
-                        <input id="id_school" type="text" value="{{ school }}" name="school" class="form-input">
+                        <input id="id_school" type="text" value="{{ school }}" name="school" class="form-input" required>
                     {% else %}
                         <input type="hidden" name="student_type" value="{{ student_type }}">
                         <input type="hidden" name="school" value="{{ school }}">
                     {% endif %}
                     {% if setup_stage == 4 %}
                         <label for="id_dob" class="form-label">Date of Birth:</label>
-                        <input id="id_dob" type="date" value="{{ dob }}" name="dob" class="form-input">
+                        <input id="id_dob" type="date" value="{{ dob }}" name="dob" class="form-input" required>
                         <label for="id_hs_grad_year" class="form-label">{{ HS_GRADUATION_LABEL_TEXT }}</label>
-                        <input id="id_hs_grad_year" type="text" name="hs_grad_year" value="{{ hs_grad_year }}" class="form-input">
+                        <input id="id_hs_grad_year" type="text" name="hs_grad_year" value="{{ hs_grad_year }}" class="form-input" pattern="[0-9]+" required>
                         <label for="id_college_grad_year" class="form-label">{{ COLLEGE_GRADUATION_LABEL_TEXT }}</label>
-                        <input id="id_college_grad_year" type="text" name="college_grad_year" value="{{ college_grad_year }}" class="form-input">
+                        <input id="id_college_grad_year" type="text" name="college_grad_year"
+                               value="{{ college_grad_year }}" required class="form-input" pattern="[0-9]+">
                         <label for="id_hometown" class="form-label">Home Town:</label>
-                        <input id="id_hometown" type="text" name="hometown" value="{{ hometown }}" class="form-input">
+                        <input id="id_hometown" type="text" name="hometown" value="{{ hometown }}"
+                               required class="form-input">
                         {% if student_type != "H" %}
                             <label for="id_college_town" class="form-label">College Town:</label>
-                            <input id="id_college_town" type="text" name="college_town" value="{{ college_town }}" class="form-input">
+                            <input id="id_college_town" type="text" name="college_town" required
+                                   value="{{ college_town }}" class="form-input">
                         {% else %}
                             <input type="hidden" name="college_town" value="{{ college_town }}">
                         {% endif %}
                         <label for="id_tuition" class="form-label">Tuition Goal:</label>
                         <div class="input-group">
                             <span class="input-group-addon">$</span>
-                            <input id="id_tuition" type="text" name="tuition" value="{{ tuition }}" class="form-input">
+                            <input required id="id_tuition" type="text" name="tuition" value="{{ tuition }}"
+                                   class="form-input"
+                                   pattern="^\\$?(([1-9](\\d*|\\d{0,2}(,\\d{3})*))|0)(\\.\\d{1,2})?$">
+                            {# match monetary amounts, from https://stackoverflow.com/questions/5963158/html5-form-input-pattern-currency-format #}
                         </div>
                     {% else %}
                         <input type="hidden" name="dob" value="{{ dob }}">

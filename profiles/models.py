@@ -28,6 +28,13 @@ class StudentProfile(models.Model):
     def get_tuition_remaining(self):
         return self.tuition_goal - self.tuition_raised
 
+    def get_summary(self):
+        return "{} | {} | {}".format(self.hometown if self.hometown else "Not Listed",
+                                 self.get_student_type_display(), self.college_grad_year)
+
+    def get_progress(self):
+        return int(round(self.tuition_raised / self.tuition_goal * 100))
+
 
 class DonorProfile(models.Model):
     organization_name = models.CharField(max_length=30)
@@ -42,6 +49,9 @@ class DonorProfile(models.Model):
         (FOUNDATION, "Foundation")
     )
     donor_type = models.CharField(max_length=1, choices=DONOR_TYPE_CHOICES, default=BUSINESS)
+
+    def get_scholarship_count(self):
+        return self.scholarship_set.count()
 
 
 class Profile(models.Model):
@@ -72,4 +82,14 @@ class Profile(models.Model):
 
     def sent_applications(self):
         return self.user.applicationresponse_set.all()
+
+    def get_initials(self):
+        return (self.first_name[0] + self.last_name[0]).upper()
+
+    def get_description(self):
+        if self.profile_type == self.STUDENT:
+            return "Class of {}".format(self.student_profile.college_grad_year)
+
+    def get_scholarship_count(self):
+        return self.user.applicationresponse_set.count();
 

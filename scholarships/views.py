@@ -90,7 +90,7 @@ def create_scholarship(request, organization_id):
         if request.POST.get("action", "") == "submit_form":
             key_words = request.POST.get("key_words_string_list", "").split(",")
             fields = request.POST.get("fields_string_list", "").split(",")
-            required_gpa = int(request.POST.get("required_gpa", ""))
+            required_gpa = float(request.POST.get("required_gpa", ""))
             title = request.POST.get("title", "")
             amount = float(request.POST.get("amount", ""))
             description = request.POST.get("description")

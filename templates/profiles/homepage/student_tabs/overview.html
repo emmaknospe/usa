@@ -1,25 +1,36 @@
-<h3 class="top-margin-s">
-    My Progress:
-</h3>
-<div class="bar">
-    <div class="bar-item" role="progressbar" style="width:25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-</div>
-<div class="mt-1">
-    My Goal: {{ profile.student_profile.tuition_goal }} |
-    Amount Raised: {{ profile.student_profile.tuition_raised }} |
-    Amount Remaining: {{ profile.student_profile.get_tuition_remaining }}
-</div>
-<h3 class="top-margin-s">
-    Raise More:
-</h3>
-<div class="columns">
-    <div class="column col-4">
-        <a href="{% url "search-scholarships" %}" class="btn btn-primary top-margin-s bottom-margin-m">Scholarships</a>
-    </div>
-    <div class="column col-4">
-        <a href="#" class="btn btn-primary top-margin-s bottom-margin-m">Tasks</a>
-    </div>
-    <div class="column col-4">
-        <a href="#" class="btn btn-primary top-margin-s bottom-margin-m">Financing</a>
-    </div>
-</div>
+<p style="margin-top:18px;">
+    You've applied to {{ profile.get_scholarship_count }} scholarships.
+    <a href="{% url "search-scholarships" %}">Look for more</a>
+</p>
+<p class="mt-2">
+    Interested in learning more about how to perfect your
+    profile to maximize awards? See our <a href="#">content</a> pages.
+</p>
+<table style="width:100%;" class="mt-2 mb-2">
+    <tr>
+        <td>
+            My&nbsp;Progress:
+        </td>
+        <td>
+            <div class="mt-1 text-center">
+                Amount Raised: {{ profile.student_profile.tuition_raised }}
+            </div>
+            <div class="bar">
+                <div class="bar-item" role="progressbar" style="width:{{ profile.student_profile.get_progress }}%;"
+                     aria-valuenow="{{ profile.student_profile.get_progress }}" aria-valuemin="0" aria-valuemax="100">
+                </div>
+            </div>
+            <div class="mt-1 text-center">
+                My Goal: {{ profile.student_profile.tuition_goal }} |
+                Amount Remaining: {{ profile.student_profile.get_tuition_remaining }}
+            </div>
+        </td>
+    </tr>
+</table>
+
+
+
+
+
+
+

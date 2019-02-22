@@ -1,10 +1,10 @@
 {% if setup_stage == 0 %}
     <label for="id_first_name" class="form-label">First name:</label>
-    <input id="id_first_name" type="text" value="{{ first_name }}" name="first_name" class="form-input">
+    <input id="id_first_name" type="text" value="{{ first_name }}" name="first_name" class="form-input" required>
     <label for="id_last_name" class="form-label">Last Name:</label>
-    <input id="id_last_name" type="text" value="{{ last_name }}" name="last_name" class="form-input">
+    <input id="id_last_name" type="text" value="{{ last_name }}" name="last_name" class="form-input" required>
     <label for="id_email" class="form-label">Email:</label>
-    <input id="id_email" type="text" value="{{ email }}" name="email" class="form-input">
+    <input id="id_email" type="text" value="{{ email }}" name="email" class="form-input" title="Please enter a valid email address." required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,14}$">
     <input type="hidden" name="profile_text" value="{{ profile_text }}">
 {% elif setup_stage == 1 %}
     <input type="hidden" name="first_name" value="{{ first_name }}">
@@ -20,10 +20,7 @@
     <input type="hidden" name="last_name" value="{{ last_name }}">
     <input type="hidden" name="email" value="{{ email }}">
     <input type="hidden" name="profile_text" value="{{ profile_text }}">
-    <label for="profile_picture" class="btn btn-primary">Select Profile Picture</label>
-    <div>
-        <input id="profile_picture" type="file" name="profile_picture" class="form-input d-none">
-    </div>
+    <input id="profile_picture" type="file" name="profile_picture" class="form-input" required>
 {% else %}
     <input type="hidden" name="first_name" value="{{ first_name }}">
     <input type="hidden" name="last_name" value="{{ last_name }}">

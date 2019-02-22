@@ -30,7 +30,7 @@
         <div class="column col-1">
         </div>
         <div class="column col-6">
-            <h5>Creating an Application for {{ scholarship.title }}</h5>
+            <h5>Editing Application for {{ scholarship.title }}</h5>
             <div id="questions-area">
                 {% for question in questions %}
                     {% include question.get_display_template with question=question editing=True %}
@@ -56,9 +56,44 @@
                     <small>{{ question_description.1 }}</small>
                 </div>
             {% endfor %}
+            <a class="btn btn-primary" href="{% url "view-scholarship" scholarship_id=scholarship.id %}">
+                Finish Editing
+            </a>
+            <a class="btn btn-primary ml-2" href="{% url "launch-scholarship" scholarship_id=scholarship.id%}">
+                Launch Scholarship
+            </a>
         </div>
         <div class="column col-4">
-            <h5>Not sure where to start? Try adding a prebuilt question:</h5>
+            <h5>Not sure where to start? Try adding a prebuilt question, like one of the ones below:</h5>
+            {# todo: make these work #}
+            <div class="tile tile-centered tile-outlined">
+              <div class="tile-icon ml-2 mr-2">
+                  <i class="fa fa-file text-primary" aria-hidden="true"></i>
+              </div>
+              <div class="tile-content">
+                  <div class="tile-title">Resume Question</div>
+                  <small class="tile-subtitle text-gray">Ask the applicant for their resume</small>
+              </div>
+              <div class="tile-action">
+                    <button class="btn btn-link">
+                        Insert
+                    </button>
+              </div>
+            </div>
+            <div class="tile tile-centered tile-outlined mt-2">
+              <div class="tile-icon ml-2 mr-2">
+                  <i class="fa fa-file text-primary" aria-hidden="true"></i>
+              </div>
+              <div class="tile-content">
+                  <div class="tile-title">Academic Achievement Question</div>
+                  <small class="tile-subtitle text-gray">Ask the applicant to describe their academic achievements</small>
+              </div>
+              <div class="tile-action">
+                    <button class="btn btn-link">
+                        Insert
+                    </button>
+              </div>
+            </div>
         </div>
         <div class="column col-1">
 

@@ -8,6 +8,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.forms.models import model_to_dict
 
+from profiles.forms import AdminProfileForm
 from profiles.models import Profile, StudentProfile, DonorProfile
 from profiles.constants import *
 
@@ -54,7 +55,7 @@ def student_home(request, tab):
         context['tab'] = tab
     else:
         context['tab'] = 'overview'
-    return render(request, "profiles/homepage/homepage_student.html", context)
+    return render(request, "profiles/homepage/student_homepage.html", context)
 
 
 @login_required
@@ -75,7 +76,7 @@ def organization_homepage(request, tab, organization_id):
 
 @login_required
 def admin_home(request, tab):
-    return None
+    return render(request, 'profiles/homepage/admin_homepage.html')
 
 
 @login_required
@@ -179,6 +180,7 @@ def process_setup_organization(request):
         donor_profile.organization_name = request.POST["organization_name"]
         donor_profile.donor_type = request.POST["donor_type"]
         donor_profile.logo_picture = request.FILES["logo_picture"]
+        donor_profile.description_text = request.POST["description_text"]
         donor_profile.save()
         request.user.authorized_donor_profile = donor_profile
         request.user.save()
@@ -193,3 +195,25 @@ def process_setup_organization(request):
     else:
         return redirect("index")
 
+
+def view_profile(request, profile_id):
+    profile = get_object_or_404(Profile, id=profile_id)
+    return render(request, "profiles/view_profile.html", {"profile": profile})
+
+
+@login_required
+def setup_admin(request):
+    if request.method == "POST":
+        form = AdminProfileForm(request.POST, request.FILES)
+        if form.is_valid():
+            profile_instance = form.save(commit=False)
+            assert isinstance(profile_instance, Profile)
+            profile_instance.user = request.user
+            profile_instance.profile_type = Profile.ADMIN
+            profile_instance.save()
+            return redirect("index")
+        else:
+            return render(request, "profiles/setup_admin.html", {'form': form})
+    else:
+        form = AdminProfileForm()
+        return render(request, "profiles/setup_admin.html", {'form': form})

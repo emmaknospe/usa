@@ -1,0 +1,15 @@
+<div class="tile" style="display: table; width: 100%;">
+    {% with application.user.profile as profile %}
+        <div class="tile-content">
+            <p class="tile-title"><h5>Applicant: {{ profile.get_full_name }}</h5></p>
+            <p class="tile-subtitle">
+                {{ profile.student_profile.get_summary }}
+            </p>
+        </div>
+
+        <div class="tile-action p-2" style="height:100%; width: 40px; vertical-align: middle; display: table-cell;">
+            <a class="btn btn-primary" href="#">View Application</a>
+            <a class="btn btn-primary" href="#">View Student Profile</a>
+        </div>
+    {% endwith %}
+</div>

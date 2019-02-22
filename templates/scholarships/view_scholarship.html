@@ -1,7 +1,12 @@
-{% extends "scholarships/scholarship_split_view.html" %}
-{% block scholarship_split_view_left %}
-    {% include "scholarships/scholarship_panel.html" %}
-{% endblock %}
-{% block scholarship_split_view_right %}
-    Cards go here with other related scholarships
+{% extends 'base.html' %}
+{% block content %}
+    {% load scholarship_permission_tags %}
+    {% get_user_can_edit_scholarship user scholarship as user_can_edit_scholarship %}
+    {% if scholarship.visible and user_can_edit_scholarship %}
+        {% include "scholarships/scholarship_split_view.html" %}
+    {% elif scholarship.visible %}
+        {% include "scholarships/scholarship_split_view.html" %}
+    {% else %}
+        {% include "scholarships/scholarship_center_view.html" %}
+    {% endif %}
 {% endblock %}

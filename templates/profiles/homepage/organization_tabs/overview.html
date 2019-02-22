@@ -1,20 +1,30 @@
-<h3 class="top-margin-s">
-    My Impact:
-</h3>
-<div class="bar">
-    <div class="bar-item" role="progressbar" style="width:25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-</div>
-Level: Patron | {# TODO: Level system? #}
-Scholarships Given: 3 |{# TODO: track scholarships given #}
-Amount Given: $1500 {# TODO: track amount given #}
-<h3 class="top-margin-s">
-    Donate More:
-</h3>
-<div class="columns">
-    <div class="column col-6">
-        <a href="{% url "create-scholarship" organization_id=organization.id %}" class="btn btn-primary top-margin-s bottom-margin-m">Offer a Scholarship</a>
-    </div>
-    <div class="column col-6">
-        <a href="#" class="btn btn-primary top-margin-s bottom-margin-m">Offer a Task</a>
-    </div>
-</div>
+<p style="margin-top:18px;">
+    You've offered {{ organization.get_scholarship_count }} scholarships.
+    <a href="{% url "create-scholarship" organization_id=organization.id  %}">
+        Offer another
+    </a>
+</p>
+<p>
+    Interested in seeing how to give more effectively? Check out our
+    <a href="#">content</a> pages.
+</p>
+<table style="width:100%;" class="mt-2 mb-2">
+    <tr>
+        <td>
+            Your Impact:
+        </td>
+        <td>
+            <div class="mt-1 text-center">
+                Amount Awarded: $600
+            </div>
+            <div class="bar">
+                <div class="bar-item" role="progressbar" style="width:60%;"
+                     aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">
+                </div>
+            </div>
+            <div class="mt-1 text-center">
+                Scholarships Given: 3
+            </div>
+        </td>
+    </tr>
+</table>
