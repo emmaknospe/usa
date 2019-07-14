@@ -1,4 +1,4 @@
-# usa
+# USA
 USA (Untitled Scholarship Application) was developed by Will Knospe as the web application behind MyScholar, 
 a scholarship platform created by Will Knospe, Erik Hansen and Elvin Ng as a submission to Carleton College's 
 Entrepreneurship Competition. USA supports the creation, search, and viewing of scholarships as well as 
