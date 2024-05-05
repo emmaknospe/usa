@@ -1,0 +1,9 @@
+{% if key_words %}
+    <ul class="menu">
+        {% for key_word in key_words %}
+            <li class="menu-item">
+                <a class="key-word-autocomplete-recommendation c-hand" data-value="{{ key_word.key_word }}">{{ key_word.key_word }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}

@@ -13,13 +13,21 @@
             {% endfor %}
         </p>
     </div>
-    <div class="tile-action p-2" style="height:100%; width: 40px; vertical-align: middle; display: table-cell;">
-        <button class="btn btn-primary">View</button>
-    </div>
-    <div class="tile-action p-2" style="height:100%; width: 40px; vertical-align: middle; display: table-cell;">
-        <button class="btn btn-primary">Edit</button>
-    </div>
-    <div class="tile-action p-2" style="height:100%; width: 40px; vertical-align: middle; display: table-cell;">
-        <button class="btn btn-primary">Delete</button>
-    </div>
+    {% if user.get_role == "DONOR" %}
+        <div class="tile-action p-2" style="height:100%; width: 40px; vertical-align: middle; display: table-cell;">
+            <button class="btn btn-primary">View</button>
+        </div>
+        <div class="tile-action p-2" style="height:100%; width: 40px; vertical-align: middle; display: table-cell;">
+            <button class="btn btn-primary">Edit</button>
+        </div>
+        <div class="tile-action p-2" style="height:100%; width: 40px; vertical-align: middle; display: table-cell;">
+            <button class="btn btn-primary">Delete</button>
+        </div>
+    {% elif user.get_role == "STUDENT" %}
+        <div class="tile-action p-2" style="height:100%; width: 40px; vertical-align: middle; display: table-cell;">
+            <a class="btn btn-primary" href="{% url "view-scholarship" scholarship_id=scholarship.id %}">View</a>
+        </div>
+    {% elif user.get_role == "ADMIN" %}
+        {# TODO: Admin actions #}
+    {% endif %}
 </div>

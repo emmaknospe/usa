@@ -150,3 +150,8 @@ def view_scholarship(request, scholarship_id):
     # refactor into distinct views for donors/students
     scholarship = get_object_or_404(Scholarship, id=scholarship_id)
     return render(request, "scholarships/view_scholarship.html", {"scholarship": scholarship})
+
+
+def get_similar_key_words(request, key_word):
+    key_words = KeyWord.objects.filter(key_word__istartswith=key_word)[:4]
+    return render(request, "utilities/key_word_recommendations.html", {"key_words": key_words})
