@@ -1,0 +1,11 @@
+{% extends "applications/questions/question_wrapper.html" %}
+{% block question_content %}
+<textarea class="form-input"
+          id="question{{ question.id }}"
+          name="question{{ question.id }}"
+          placeholder="" rows="3"
+          {% if editing %}
+               disabled
+          {% endif %}
+></textarea>
+{% endblock %}

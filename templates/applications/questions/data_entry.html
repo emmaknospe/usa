@@ -1,0 +1,10 @@
+{% extends "applications/questions/question_wrapper.html" %}
+{% block question_content %}
+<input id="question{{ question.id }}"
+   class="form-input" type="text"
+       name="question{{ question.id }}"
+   {% if editing %}
+       disabled
+   {% endif %}
+/>
+{% endblock %}

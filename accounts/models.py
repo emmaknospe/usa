@@ -14,15 +14,11 @@ class User(AbstractUser):
     def get_role(self):
         if self.is_authenticated:
             if hasattr(self, "profile"):
-                if self.profile.profile_type == Profile.STUDENT:
-                    return "STUDENT"
-                elif self.profile.profile_type == Profile.DONOR:
-                    return "DONOR"
-                elif self.profile.profile_type == Profile.ADMIN:
-                    return "ADMIN"
-                else:
-                    print("Error: Invalid profile")
+                return self.profile.profile_type
             else:
                 return "NO_PROFILE"
         else:
             return "ANONYMOUS"
+
+    def can_edit_scholarship(self, scholarship):
+        return self.get_role() == Profile.DONOR and self.authorized_donor_profile_id == scholarship.organization_id

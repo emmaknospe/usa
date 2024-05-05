@@ -1,0 +1,11 @@
+{% extends "applications/questions/question_wrapper.html" %}
+{% block question_content %}
+{% for option in question.get_question_subclass.sorted_option_set %}
+    <div class="form-group">
+        <label class="form-radio">
+            <input type="radio" name="question{{ question.id }}" value="{{ option.list_no }}"{% if editing %} disabled {% endif %}>
+            <i class="form-icon"></i> {{ option.answer_text }}
+        </label>
+    </div>
+{% endfor %}
+{% endblock %}

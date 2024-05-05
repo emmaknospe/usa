@@ -1,6 +1,6 @@
 <!-- For displaying scholarships in a list -->
 {# TODO: AUTHORIZATION FOR ACTIONS #}
-
+{% load scholarship_permission_tags %}
 <div class="tile" style="display: table; width: 100%;">
     <div class="tile-content">
         <p class="tile-title"><h5>{{ scholarship.title }}</h5></p>
@@ -13,9 +13,10 @@
             {% endfor %}
         </p>
     </div>
-    {% if user.get_role == "DONOR" %}
+    {% get_user_can_edit_scholarship user scholarship as user_can_edit_scholarship %}
+    {% if user_can_edit_scholarship %}
         <div class="tile-action p-2" style="height:100%; width: 40px; vertical-align: middle; display: table-cell;">
-            <button class="btn btn-primary">View</button>
+            <a class="btn btn-primary" href="{% url "view-scholarship" scholarship_id=scholarship.id %}">View</a>
         </div>
         <div class="tile-action p-2" style="height:100%; width: 40px; vertical-align: middle; display: table-cell;">
             <button class="btn btn-primary">Edit</button>
@@ -23,11 +24,11 @@
         <div class="tile-action p-2" style="height:100%; width: 40px; vertical-align: middle; display: table-cell;">
             <button class="btn btn-primary">Delete</button>
         </div>
-    {% elif user.get_role == "STUDENT" %}
+    {% elif user.get_role == STUDENT %}
         <div class="tile-action p-2" style="height:100%; width: 40px; vertical-align: middle; display: table-cell;">
             <a class="btn btn-primary" href="{% url "view-scholarship" scholarship_id=scholarship.id %}">View</a>
         </div>
-    {% elif user.get_role == "ADMIN" %}
+    {% elif user.get_role == ADMIN %}
         {# TODO: Admin actions #}
     {% endif %}
 </div>

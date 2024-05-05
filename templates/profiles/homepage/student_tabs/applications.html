@@ -1,1 +1,15 @@
-Applications Placeholder {# TODO: finish #}
+<div class="divider"></div>
+{% for sent_application in profile.sent_applications %}
+    <div class="tile tile-centered">
+        <div class="tile-content">
+            <p class="tile-title">{{ sent_application.application.scholarship.title }}</p>
+            <small class="tile-subtitle text-gray">Applied 1 Jan, 2017</small>
+        </div>
+        <div class="tile-action p-2">
+            <a class="btn btn-primary" href="{% url "withdraw-application" application_response_id=sent_application.id %}">
+                Withdraw</a>
+            <a class="btn btn-primary" href="#">View{# TODO: make this work #}</a>
+        </div>
+    </div>
+    <div class="divider"></div>
+{% endfor %}

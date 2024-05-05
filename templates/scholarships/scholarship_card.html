@@ -17,15 +17,15 @@
         {{ scholarship.short_description }}
     </div>
     <div class="card-footer">
-        {% if user.get_role == "DONOR" %}
+        {% if user.get_role == DONOR %}
             {% if user.authorized_donor_profile == scholarship.organization %}
                 <a class="btn btn-primary" href="{% url "view-scholarship" scholarship_id=scholarship.id %}">View</a>
                 <a class="btn btn-primary">Edit</a>
                 <a class="btn btn-primary">Delete</a>
             {% endif %}
-        {% elif user.get_role == "STUDENT" %}
+        {% elif user.get_role == STUDENT %}
             <a class="btn btn-primary" href="{% url "view-scholarship" scholarship_id=scholarship.id %}">View</a>
-        {% elif user.get_role == "ADMIN" %}
+        {% elif user.get_role == ADMIN %}
             {# TODO: Admin actions #}
         {% endif %}
     </div>

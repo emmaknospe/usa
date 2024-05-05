@@ -1,4 +1,13 @@
 {% extends "base.html" %}
+{% block header_content %}
+    {% if authorized %}
+        {% block authorized_header_content %}
+        {% endblock %}
+    {% else %}
+        {% block unauthorized_header_content %}
+        {% endblock %}
+    {% endif %}
+{% endblock %}
 {% block content %}
     {% if authorized %}
         {% block authorized_content %}

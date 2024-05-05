@@ -42,3 +42,4 @@ ACADEMIC_DISCIPLINES = [
     'Sociology',
     'Miscellaneous Social Science'
 ]
+ACADEMIC_DISCIPLINES.sort()

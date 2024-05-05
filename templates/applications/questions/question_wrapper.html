@@ -1,0 +1,31 @@
+<div class="panel mb-2" id="question-wrapper-{{ question.id }}">
+    <div class="panel-header">
+        {{ question.get_header }}
+        {% if editing %}
+            <a class="c-hand float-right ml-2 mr-2 delete-question" data-question-id="{{ question.id }}">
+                <i class="fas fa-trash-alt"></i>
+            </a>
+            <a class="c-hand float-right ml-2 mr-2 edit-question" data-question-id="{{ question.id }}">
+                <i class="fas fa-edit"></i>
+            </a>
+            <a class="c-move float-right ml-2 mr-2" data-question-id="{{ question.id }}">
+                <i class="fas fa-arrows-alt"></i>
+            </a>
+        {% endif %}
+    </div>
+    <div class="panel-body">
+        {# TODO: body goes here #}
+        <small>{{ question.get_sub_header }}</small>
+    </div>
+    <div class="panel-footer">
+        <div
+            {% if editing %} class="tooltip tooltip-bottom"
+                data-tooltip="You cannot input into a form you are editing."
+            {% endif %}
+        >
+            {% block question_content %}
+            {% endblock %}
+        </div>
+
+    </div>
+</div>

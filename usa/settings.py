@@ -24,7 +24,7 @@ SECRET_KEY = '$he6g*$vis#$((c)g@qx2n!9t-1_rp8$d8)7l72#91smg1qp4!'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["myscholar.xe8en3qv27.us-east-1.elasticbeanstalk.com"]
 
 LOGIN_REDIRECT_URL = 'index'
 LOGOUT_REDIRECT_URL = 'index'
@@ -34,6 +34,7 @@ LOGOUT_REDIRECT_URL = 'index'
 INSTALLED_APPS = [
     'profiles.apps.AccountsConfig',
     'scholarships.apps.ScholarshipsConfig',
+    'applications.apps.ApplicationsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -70,6 +71,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'usa.context_processors.constants'
             ],
         },
     },

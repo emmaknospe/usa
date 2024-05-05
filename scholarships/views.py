@@ -1,5 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
+
+from profiles.models import Profile
 from scholarships.constants import ACADEMIC_DISCIPLINES
 from scholarships.models import Scholarship, KeyWord, AcademicField
 from django.db.models import Q
@@ -43,6 +45,8 @@ def search_scholarships(request):
             fields_q = fields_q | Q(fields__field_name=field)
         else:
             fields_q = Q(fields__field_name=field)
+    if not (params.get("show_all", "") and request.user.get_role() == Profile.ADMIN):
+        scholarships = scholarships.filter(visible=True)
     if fields_q:
         scholarships = scholarships.filter(fields_q)
     if params.get("key_words", ""):
@@ -65,6 +69,7 @@ def search_scholarships(request):
         context['tile'] = True
         context['view'] = 'list'
     return render(request, "scholarships/search_scholarships.html", context)
+
 
 @login_required
 def create_scholarship(request, organization_id):
@@ -147,7 +152,7 @@ def create_scholarship(request, organization_id):
 
 @login_required
 def view_scholarship(request, scholarship_id):
-    # refactor into distinct views for donors/students
+    # consider refactoring into distinct views for donors/students
     scholarship = get_object_or_404(Scholarship, id=scholarship_id)
     return render(request, "scholarships/view_scholarship.html", {"scholarship": scholarship})
 
@@ -155,3 +160,17 @@ def view_scholarship(request, scholarship_id):
 def get_similar_key_words(request, key_word):
     key_words = KeyWord.objects.filter(key_word__istartswith=key_word)[:4]
     return render(request, "utilities/key_word_recommendations.html", {"key_words": key_words})
+
+
+def launch_scholarship(request, scholarship_id):
+    scholarship = get_object_or_404(Scholarship, id=scholarship_id)
+    scholarship.visible = True
+    scholarship.save()
+    return redirect("view-scholarship", scholarship_id=scholarship_id)
+
+
+def retract_scholarship(request, scholarship_id):
+    scholarship = get_object_or_404(Scholarship, id=scholarship_id)
+    scholarship.visible = False
+    scholarship.save()
+    return redirect("view-scholarship", scholarship_id=scholarship_id)

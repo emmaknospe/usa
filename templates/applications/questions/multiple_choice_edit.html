@@ -1,0 +1,26 @@
+<label for="question_text">
+    Header:
+</label>
+<input class="form-input" type="text" name="question_text" value="{{ question.get_question_subclass.question_text }}">
+<label for="question_text">
+    Description:
+</label>
+<input class="form-input" type="text" name="description_text"
+       value="{{ question.get_question_subclass.description_text }}">
+<div id="options" class="m-2">
+    {% for option in question.get_question_subclass.sorted_option_set %}
+        <label>Option:</label>
+        <input class="form-input" type="text" name="option_{{ option.list_no }}">
+    {% endfor %}
+    <input type="hidden" id="cur_list_no" name="cur_list_no" value="{{ option.list_no|length }}"/>
+</div>
+<a id="add-option" class="btn btn-primary">Add Option</a>
+<script>
+    console.log("worked");
+    let cur_list_no = {{ option.list_no|length }};
+    $("#add-option").click(function() {
+        $("#options").append("<label>Option:</label><input class=\"form-input\" type=\"text\" name=\"option_" + cur_list_no + "\">");
+        cur_list_no++;
+        $("#cur_list_no").val(cur_list_no);
+    });
+</script>

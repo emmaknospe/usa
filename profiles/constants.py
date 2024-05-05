@@ -1,4 +1,4 @@
-
+from profiles.models import Profile
 
 HS_GRADUATION_LABEL_TEXT_BY_STUDENT_TYPE_DICT = {
     "H": "Projected High School Graduation Date:",
@@ -20,3 +20,8 @@ COLLEGE_GRADUATION_LABEL_TEXT_BY_STUDENT_TYPE_DICT = {
 
 def COLLEGE_GRADUATION_LABEL_TEXT_BY_STUDENT_TYPE(student_type):
     return COLLEGE_GRADUATION_LABEL_TEXT_BY_STUDENT_TYPE_DICT[student_type]
+
+
+STUDENT = Profile.STUDENT
+ADMIN = Profile.ADMIN
+DONOR = Profile.DONOR
