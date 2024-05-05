@@ -1,4 +1,3 @@
-{% load djmoney %}
 {% load scholarship_permission_tags %}
 {% get_user_can_edit_scholarship user scholarship as user_can_edit_scholarship %}
 <div class="panel">
@@ -9,8 +8,8 @@
                     <h5>{{ scholarship.title }}</h5>
                 </td>
                 <td>
-                    <span class="float-right">
-                        <h5>$100.00 <!--TODO: make this display the actual money amount--></h5>
+                    <span class="float-right h5">
+                        {{ scholarship.amount }}
                     </span>
                 </td>
             </tr>

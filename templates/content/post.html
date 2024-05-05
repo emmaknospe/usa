@@ -1,0 +1,31 @@
+<div class="panel mt-2 mb-2">
+    <div class="panel-header">
+        <div class="panel-title">
+            <div class="avatar-xxl-title">
+                <div class="float-left">
+                    <figure class="avatar avatar-xxl">
+                        <img src="{{ post.author.profile_picture.url }}"/>
+                    </figure>
+                </div>
+                <span class="avatar-title">
+                    <p class="h3 mb-0">{{ post.title }}</p>
+                    <small class="mt-0">{{ post.author.get_full_name }}, {{ post.created }}</small>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="panel-body">
+        {{ post.text }}
+    </div>
+    <div class="panel-footer">
+        <button class="btn btn-link float-right">
+            <i class="fa fa-user"></i>
+        </button>
+        <button class="btn btn-link float-right">
+            <i class="fa fa-thumbs-up"></i>
+        </button>
+        <button class="btn btn-link float-right">
+            <i class="fa fa-bell"></i>
+        </button>
+    </div>
+</div>

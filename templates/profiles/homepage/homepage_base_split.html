@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="columns">
+        <div class="column col-6">
+            {# TODO: refactor this into extension format #}
+            {% if profile %}
+                {% if profile.profile_type == profile.STUDENT %}
+                    {% include "profiles/student_profile_panel.html" %}
+                {% endif %}
+            {% elif organization %}
+                {% with organization as organization %}
+                    {% include "profiles/organization_profile_panel.html" %}
+                {% endwith %}
+            {% endif %}
+        </div>
+        <div class="column col-6">
+            <div class="panel m-2">
+                <div class="panel-header">
+                    {% block homepage_header %}
+                    {% endblock %}
+                </div>
+                <div class="panel-nav">
+                    {% block homepage_nav %}
+                    {% endblock %}
+                </div>
+                <div class="panel-body">
+                    {% block homepage_content %}
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

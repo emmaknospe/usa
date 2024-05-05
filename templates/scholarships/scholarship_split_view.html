@@ -1,17 +1,30 @@
-{% extends 'base.html' %}
-{% block content %}
-    <div class="columns">
-        <div class="column col-10 col-mx-auto">
-            <div class="columns">
-                <div class="column col-6">
-                    {% block scholarship_split_view_left %}
-                    {% endblock %}
-                </div>
-                <div class="column col-6">
-                    {% block scholarship_split_view_right %}
-                    {% endblock %}
-                </div>
+<div class="columns">
+    <div class="column col-11 col-mx-auto">
+        <div class="columns">
+            <div class="column">
+                {% include "scholarships/scholarship_panel.html" %}
+            </div>
+            <div class="divider-vert">
+
+            </div>
+            <div class="column">
+                <h4>Recommended Similar Scholarships:</h4>
+                {% load scholarship_permission_tags %}
+                {% get_user_can_edit_scholarship user scholarship as user_can_edit_scholarship %}
+                {% if scholarship.visible and user_can_edit_scholarship %}
+                    {% for application in scholarship.get_responses %}
+                        {% include "applications/application_tile.html" %}
+                    {% endfor %}
+                {% elif scholarship.visible %}
+                    {% for recommended_scholarship in scholarship.get_related_scholarships %}
+                        {% with recommended_scholarship as scholarship %}
+                            {% include "scholarships/scholarship_tile.html" %}
+                        {% endwith %}
+                    {% endfor %}
+                {% else %}
+                    something here
+                {% endif %}
             </div>
         </div>
     </div>
-{% endblock %}
+</div>

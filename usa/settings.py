@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 
+VERSION = "Alpha 1.0"
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -24,7 +26,7 @@ SECRET_KEY = '$he6g*$vis#$((c)g@qx2n!9t-1_rp8$d8)7l72#91smg1qp4!'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["myscholar.xe8en3qv27.us-east-1.elasticbeanstalk.com", "localhost"]
+ALLOWED_HOSTS = ["myscholar.xe8en3qv27.us-east-1.elasticbeanstalk.com", "localhost", "127.0.0.1"]
 
 LOGIN_REDIRECT_URL = 'index'
 LOGOUT_REDIRECT_URL = 'index'
@@ -35,6 +37,7 @@ INSTALLED_APPS = [
     'profiles.apps.AccountsConfig',
     'scholarships.apps.ScholarshipsConfig',
     'applications.apps.ApplicationsConfig',
+    'content.apps.ContentConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

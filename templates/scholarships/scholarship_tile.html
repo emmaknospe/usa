@@ -2,6 +2,11 @@
 {# TODO: AUTHORIZATION FOR ACTIONS #}
 {% load scholarship_permission_tags %}
 <div class="tile" style="display: table; width: 100%;">
+    <div class="tile-icon" style="height: 100%; width: 120px; vertical-align: middle; display: table-cell;">
+        <figure class="avatar avatar-xxl">
+            <img src="{{ scholarship.organization.logo_picture.url }}" alt="...">
+        </figure>
+    </div>
     <div class="tile-content">
         <p class="tile-title"><h5>{{ scholarship.title }}</h5></p>
         <p class="tile-subtitle">

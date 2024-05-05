@@ -1,0 +1,26 @@
+<div class="panel m-2 p-1">
+    <div class="panel-header">
+        <div class="tile">
+            <div class="tile-icon">
+                {% if organization.logo_picture %}
+                    <figure class="avatar avatar-xxl">
+                        <img src="{{ organization.logo_picture.url }}">
+                    </figure>
+                {% else %}
+                    {# TODO: fix default value for lacking organization profiles #}
+                    <figure class="avatar avatar-xxl" data-initial="NA">
+                    </figure>
+                {% endif %}
+            </div>
+            <div class="tile-content ml-2">
+                <h3 class="title-title mt-2">{{ organization.organization_name }}</h3>
+                <h5 class="tile-subtitle">{{ organization.get_donor_type_display }}</h5>
+            </div>
+        </div>
+    </div>
+    <div class="panel-body">
+        {{ organization.description_text }}
+    </div>
+    <div class="panel-footer">
+    </div>
+</div>

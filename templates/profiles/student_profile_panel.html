@@ -1,0 +1,27 @@
+<div class="panel m-2 p-1">
+    <div class="panel-header">
+        <div class="tile">
+            <div class="tile-icon">
+                {% if profile.profile_picture %}
+                    <figure class="avatar avatar-xxl">
+                        <img src="{{ profile.profile_picture.url }}">
+                    </figure>
+                {% else %}
+                    <figure class="avatar avatar-xxl" data-initial="{{ profile.get_initials }}">
+                    </figure>
+                {% endif %}
+            </div>
+            <div class="tile-content ml-2">
+                <h3 class="title-title mt-2">{{ profile.get_full_name }}</h3>
+                <h5 class="tile-subtitle">{{ profile.get_description }}</h5>
+            </div>
+        </div>
+    </div>
+    <div class="panel-body">
+        {{ profile.profile_text }}
+        {% if profile.profile_type == profile.STUDENT %}
+        {% endif %}
+    </div>
+    <div class="panel-footer">
+    </div>
+</div>

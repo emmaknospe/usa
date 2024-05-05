@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block header_content %}
+{% endblock %}
+{% block content %}
+    <div class="columns">
+        <div class="column col-6 col-mx-auto">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{form.as_p}}
+                <button type="submit" class="btn btn-default">Submit</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

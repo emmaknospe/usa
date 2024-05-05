@@ -1,5 +1,5 @@
 from django.db import models
-from djmoney.forms import MoneyField
+from djmoney.models.fields import MoneyField
 
 from applications.models import Application
 from profiles.models import DonorProfile
@@ -30,4 +30,15 @@ class Scholarship(models.Model):
             return self.description[0:100] + "..."
         else:
             return self.description
+
+    def get_responses(self):
+        return self.application.applicationresponse_set.all()
+
+    def get_related_scholarships(self):
+        # TODO: FIX
+        return []
+        if Scholarship.objects.count() > 4:
+            return Scholarship.objects.exclude(id == self.id)[0:3]
+        else:
+            return Scholarship.objects.exclude(id == self.id)
     # TODO: handle location here and in students

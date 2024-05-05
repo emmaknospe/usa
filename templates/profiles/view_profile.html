@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="columns">
+        <div class="column col-8 col-mx-auto">
+            {% if profile.profile_type == profile.STUDENT %}
+                {% include "profiles/student_profile_panel.html" %}
+            {% elif profile.profile_type == profile.DONOR %}
+                {% with profile.user.authorized_donor_profile as organization %}
+                    {% include "profiles/organization_profile_panel.html" %}
+                {% endwith %}
+            {% else %}
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

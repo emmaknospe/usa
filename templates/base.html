@@ -16,24 +16,25 @@
 <body>
     <header class="navbar m-2">
         <section class="navbar-section">
-            <a href="{% url "index" %}" class="navbar-brand mr-2">USA</a>
-            <a href="#" class="btn btn-link">Scholarships</a>
-            <a href="#" class="btn btn-link">Tasks</a>
-            <a href="#" class="btn btn-link">Financing</a>
+            <a href="{% url "index" %}" class="navbar-brand mr-2">MyScholar</a>
+            <a href="{% url "search-scholarships" %}" class="btn btn-link">Scholarships</a>
+            <a href="{% url "view-posts" %}" class="btn btn-link">Content</a>
         </section>
         <section class="navbar-section">
+            <i class="mr-2">{{ VERSION }}</i>
             {% if user.is_authenticated %}
                 <a href="{% url "logout" %}" class="btn btn-link">Logout</a>
             {% else %}
                 <a href="{% url "login" %}" class="btn btn-link">Login</a>
                 <a href="{% url "register-student" %}" class="btn btn-link">Sign Up</a>
             {% endif %}
+
         </section>
     </header>
     <div class="divider"></div>
     <div class="columns mt-2 mb-2"></div>
     <div class="container">
-        <!-- assign user role -->
+        <!-- TODO: assign user role? -->
         {% block content %}
         {% endblock %}
     </div>

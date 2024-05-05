@@ -3,7 +3,14 @@
 
 <div class="card mb-1 mt-1">
     <div class="card-header">
-        <div class="card-title h5">{{ scholarship.title }}</div>
+        <div style="width:100%;" class="text-center mt-2 mb-2">
+             <figure class="avatar avatar-xl" style="margin-left: auto; margin-right: auto;">
+                 <img src="{{ scholarship.organization.logo_picture.url }}" alt="...">
+             </figure>
+        </div>
+        <div class="card-title h5">
+
+            {{ scholarship.title }}</div>
         <div class="card-subtitle mt-2" style="overflow-x:auto;white-space: nowrap;">
             {% for field in scholarship.fields.all %}
                 <span class="chip bg-secondary">{{ field.field_name }}</span>
