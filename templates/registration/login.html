@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="col-4 col-mx-auto">
+        <form method="post" action="{% url "login" %}">
+            {% csrf_token %}
+            <div class="form-group" >
+                <label for="id_username" class="form-label">Username:</label>
+                <input type="text" id="id_username" class="form-input" placeholder="username" name="username">
+                <label for="id_password" class="form-label">Password:</label>
+                <input type="password" id="id_password" class="form-input" name="password">
+                <input type="hidden" name="next" value="{{ next }}"/>
+                <button type="submit" class="btn btn-primary mt-2">Login</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}
