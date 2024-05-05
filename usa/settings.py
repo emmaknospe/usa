@@ -26,7 +26,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-LOGIN_REDIRECT_URL = 'profile'
+LOGIN_REDIRECT_URL = 'user-home'
 LOGOUT_REDIRECT_URL = 'index'
 
 # Application definition
@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'accounts.apps.AccountsConfig',
-    'widget_tweaks'
+    'widget_tweaks',
+    'djmoney'
 ]
 
 MIDDLEWARE = [
