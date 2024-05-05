@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="columns">
+        <div class="column col-10 col-mx-auto">
+            <div class="columns">
+                <div class="column col-6">
+                    {% block scholarship_split_view_left %}
+                    {% endblock %}
+                </div>
+                <div class="column col-6">
+                    {% block scholarship_split_view_right %}
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

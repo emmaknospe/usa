@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+    {% if authorized %}
+        {% block authorized_content %}
+        {% endblock %}
+    {% else %}
+        {% block unauthorized_content %}
+        {% endblock %}
+    {% endif %}
+{% endblock %}

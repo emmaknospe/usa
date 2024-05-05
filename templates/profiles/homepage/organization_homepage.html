@@ -1,0 +1,26 @@
+{% extends 'profiles/homepage/homepage_base.html' %}
+{% block homepage_header %}
+    <div class="panel-title mt-2">
+        <h2>
+            {{ organization.organization_name }}
+        </h2>
+    </div>
+{% endblock %}
+{% block homepage_nav %}
+    {% include "profiles/homepage/organization_homepage_nav.html" %}
+{% endblock %}
+{% block homepage_content %}
+    {% if authorized %}
+        {% if tab == 'overview' %}
+            {% include "profiles/homepage/organization_tabs/overview.html" %}
+        {% elif tab == 'scholarships' %}
+            {% include "profiles/homepage/organization_tabs/scholarships.html" %}
+        {% elif tab == 'applicants' %}
+            {% include "profiles/homepage/organization_tabs/applicants.html" %}
+        {% elif tab == 'manage' %}
+            {% include "profiles/homepage/organization_tabs/manage.html" %}
+        {% endif %}
+    {% else %}
+        <h3>You are not authorized to view this page.</h3>
+    {% endif %}
+{% endblock %}

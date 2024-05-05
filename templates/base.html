@@ -6,6 +6,7 @@
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'main.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'spectre.css' %}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 </head>
 <body>
     <header class="navbar m-2">
@@ -13,6 +14,7 @@
             <a href="{% url "index" %}" class="navbar-brand mr-2">USA</a>
             <a href="#" class="btn btn-link">Scholarships</a>
             <a href="#" class="btn btn-link">Tasks</a>
+            <a href="#" class="btn btn-link">Financing</a>
         </section>
         <section class="navbar-section">
             {% if user.is_authenticated %}
@@ -26,6 +28,7 @@
     <div class="divider"></div>
     <div class="columns mt-2 mb-2"></div>
     <div class="container">
+        <!-- assign user role -->
         {% block content %}
         {% endblock %}
     </div>

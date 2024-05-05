@@ -24,6 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('profiles/', include('profiles.urls')),
     path('profiles/', include('accounts.urls')),
+    path('scholarships/', include('scholarships.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
     path('', IndexView.as_view(), name='index'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

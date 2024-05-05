@@ -1,0 +1,14 @@
+<ul class="tab tab-block">
+    <li class="tab-item {% if tab == "overview" %}active{% endif %}">
+        <a href="{% url 'organization-home' organization_id=organization.id  tab='overview' %}">Overview</a>
+    </li>
+    <li class="tab-item {% if tab == "scholarships" %}active{% endif %}">
+        <a href="{% url 'organization-home' organization_id=organization.id tab='scholarships' %}">Scholarships</a>
+    </li>
+    <li class="tab-item {% if tab == "applicants" %}active{% endif %}">
+        <a href="{% url 'organization-home' organization_id=organization.id tab='applicants' %}">Applicants</a>
+    </li>
+    <li class="tab-item {% if tab == "manage" %}active{% endif %}">
+        <a href="{% url 'organization-home' organization_id=organization.id tab='manage' %}">Manage</a>
+    </li>
+</ul>

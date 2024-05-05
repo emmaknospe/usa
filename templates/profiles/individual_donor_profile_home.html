@@ -1,0 +1,10 @@
+<!--Eventually, individual donor profiles will go here instead of being linked only to the organization-->
+
+{% if not user.authorized_donor_profile %}
+    It looks like you haven't linked your account to a donor profile yet. Choose from one of the following options:
+    <div class="columns">
+        <div class="column col-10 col-mx-auto">
+            {% include "profiles/setup_donor_inner.html" %}
+        </div>
+    </div>
+{% endif %}

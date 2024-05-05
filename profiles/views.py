@@ -8,7 +8,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 from django.forms.models import model_to_dict
 
-from profiles.models import Profile, StudentProfile
+from profiles.models import Profile, StudentProfile, DonorProfile
 from profiles.constants import *
 
 
@@ -20,21 +20,67 @@ class RegisterView(generic.CreateView):
 
 class LoginView(generic.FormView):
     form_class = AuthenticationForm
-    success_url = reverse_lazy('user-home')
+    success_url = reverse_lazy('redirect-to-home-view')
     template_name = 'registration/login.html'
 
 
-@method_decorator(login_required, name='dispatch')
-class UserHomeView(generic.TemplateView):
-    template_name = 'profiles/user_homepage_overview.html'
+@login_required
+def redirect_to_home_view(request):
+    if hasattr(request.user, "profile"):
+        profile = request.user.profile
+        if profile.profile_type == Profile.STUDENT:
+            return redirect("student-home", tab="default")
+        elif profile.profile_type == Profile.ADMIN:
+            return redirect("admin-home", tab="default")
+        elif profile.profile_type == Profile.DONOR:
+            if request.user.authorized_donor_profile and not profile.visible:
+                # do not display donor profiles if they have not created one.
+                return redirect("organization-home",
+                                tab='default',
+                                organization_id=request.user.authorized_donor_profile.id)
+            else:
+                return redirect("donor-home", tab="default")
+        else:
+            return HttpResponseServerError("Invalid profile type.")
+    else:
+        return render(request, "profiles/homepage/homepage_incomplete_profile.html", {})
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        try:
-            context['profile'] = self.request.user.profile
-        except Profile.DoesNotExist:
-            context['profile'] = None
-        return context
+
+@login_required
+def student_home(request, tab):
+    context = {'profile': request.user.profile}
+    tabs = ['overview', 'saved_scholarships', 'applications', 'responses', 'my_information']
+    if tab in tabs:
+        context['tab'] = tab
+    else:
+        context['tab'] = 'overview'
+    return render(request, "profiles/homepage/homepage_student.html", context)
+
+
+@login_required
+def organization_homepage(request, tab, organization_id):
+    organization = get_object_or_404(DonorProfile, id=organization_id)
+    context = {'organization': organization, 'id': organization_id}
+    tabs = ['overview', 'scholarships', 'applicants', 'manage']
+    if tab in tabs:
+        context['tab'] = tab
+    else:
+        context['tab'] = 'overview'
+    if request.user.authorized_donor_profile == organization:
+        context['authorized'] = True
+    else:
+        context['authorized'] = False
+    return render(request, 'profiles/homepage/organization_homepage.html', context)
+
+
+@login_required
+def admin_home(request, tab):
+    return None
+
+
+@login_required
+def donor_home(request, tab):
+    return None
 
 
 @login_required
@@ -56,22 +102,17 @@ def setup_student(request, setup_stage):
     context = defaults.copy()
     ignore_attrs = ['error']
     tracked_attrs = [key for key in context.keys() if key not in ignore_attrs]
-    print(tracked_attrs)
     profile = None
     if request.method == "POST":
         if request.POST.get("resume", ''):
-            print("resuming")
             profile_id = request.POST['profile_id']
             profile = get_object_or_404(Profile, id=int(profile_id))
             context.update(model_to_dict(profile))
-            print(model_to_dict(profile))
             context['profile_id'] = profile_id
         else:
-            print("not resuming")
             profile_id = request.POST.get('profile_id', '')
             for attr in tracked_attrs:
                 context[attr] = request.POST.get(attr, defaults[attr])
-                print("Set " + attr + "to " + str(context[attr]))
 
             if profile_id != '':
                 profile = get_object_or_404(Profile, id=int(profile_id))
@@ -88,8 +129,7 @@ def setup_student(request, setup_stage):
             else:
                 return HttpResponseServerError("Invalid action")
     elif setup_stage != 0:
-        return redirect("student-profile-setup", 0)
-    print(context)
+        return redirect("setup-student", 0)
     if setup_stage == 3:
         if not hasattr(request.user, "profile"):
             profile = Profile()
@@ -115,44 +155,41 @@ def setup_student(request, setup_stage):
         student_profile.save()
         profile.student_profile = student_profile
         profile.save()
-        print("this occurred")
-        return redirect("user-home")
+        return redirect("redirect-to-home-view")
     context['HS_GRADUATION_LABEL_TEXT'] = HS_GRADUATION_LABEL_TEXT_BY_STUDENT_TYPE(context['student_type'])
     context['COLLEGE_GRADUATION_LABEL_TEXT'] = COLLEGE_GRADUATION_LABEL_TEXT_BY_STUDENT_TYPE(context['student_type'])
     context['setup_stage'] = setup_stage
     return render(request, "profiles/setup_student.html", context)
 
 
+@method_decorator(login_required, name='dispatch')
+class SetupDonorView(generic.TemplateView):
+    template_name = 'profiles/setup_donor.html'
+
+
+@method_decorator(login_required, name='dispatch')
+class SetupOrganizationView(generic.TemplateView):
+    template_name = 'profiles/setup_organization.html'
+
+
 @login_required
-def setup_donor(request, setup_stage):
-    context = {'error': '',
-               'first_name': '',
-               'last_name': '',
-               'email': '',
-               'profile_text': '',
-               }
-
+def process_setup_organization(request):
     if request.method == "POST":
-        context['first_name'] = request.POST.get('first_name', '')
-        context['last_name'] = request.POST.get('last_name', '')
-        context['email'] = request.POST.get('email', '')
-        context['profile_text'] = request.POST.get('profile_text', '')
-        action = request.POST.get('action', 'next')
-        if action == "next":
-            setup_stage += 1
-        elif action == "previous":
-            setup_stage -= 1
-    if setup_stage == 3:
-        profile = Profile()
-        profile.profile_picture = request.FILES["profile_picture"]
-        profile.first_name = request.POST['first_name']
-        profile.last_name = request.POST['last_name']
-        profile.email = request.POST['email']
-        profile.profile_text = request.POST['profile_text']
-        profile.profile_type = profile.DONOR
-        profile.user = request.user
-        profile.save()
-        return redirect("user-home")
+        donor_profile = DonorProfile()
+        donor_profile.organization_name = request.POST["organization_name"]
+        donor_profile.donor_type = request.POST["donor_type"]
+        donor_profile.logo_picture = request.FILES["logo_picture"]
+        donor_profile.save()
+        request.user.authorized_donor_profile = donor_profile
+        request.user.save()
+        if not hasattr(request.user, "profile"):
+            # insert placeholder profile
+            user_profile = Profile(first_name="", last_name="", email="", visible=False, profile_picture=None,
+                                   profile_text="", profile_type="D")
+            user_profile.save()
+            user_profile.user = request.user
+            user_profile.save()
+        return redirect("index")
+    else:
+        return redirect("index")
 
-    context['setup_stage'] = setup_stage
-    return render(request, "profiles/setup_donor.html", context)

@@ -1,0 +1,20 @@
+{% extends 'profiles/homepage/homepage_base.html' %}
+
+{% block homepage_header %}
+    Hi {{ user.username }}! It looks like you got interrupted while creating your profile. Let's get you set up:
+{% endblock %}
+
+{% block homepage_nav %}
+{% endblock %}
+
+{% block homepage_content %}
+    <div class="columns m-2">
+        <div class="column text-center vertical-margins-xl">
+            <a href="{% url "setup-student" setup_stage=0 %}" class="btn btn-primary">I'm a Student</a>
+        </div>
+        <div class="divider-vert" data-content="OR"></div>
+        <div class="column text-center vertical-margins-xl">
+            <a href="{% url "setup-donor" %}" class="btn btn-primary">I'm a Donor</a>
+        </div>
+    </div>
+{% endblock %}

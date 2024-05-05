@@ -1,0 +1,8 @@
+<div class="text-left">
+    {% for scholarship in organization.scholarship_set.all %}
+        {% include "scholarships/scholarship_tile.html" %}
+        {% if not forloop.last %}
+            <div class="divider"></div>
+        {% endif %}
+    {% endfor %}
+</div>

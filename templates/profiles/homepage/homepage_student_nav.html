@@ -1,0 +1,17 @@
+<ul class="tab tab-block">
+    <li class="tab-item {% if tab == "overview" %}active{% endif %}">
+        <a href="{% url 'student-home' tab='overview' %}">Overview</a>
+    </li>
+    <li class="tab-item {% if tab == "saved_scholarships" %}active{% endif %}">
+        <a href="{% url 'student-home' tab='saved_scholarships' %}">Saved Scholarships</a>
+    </li>
+    <li class="tab-item {% if tab == "applications" %}active{% endif %}">
+        <a href="{% url 'student-home' tab='applications' %}">Applications</a>
+    </li>
+    <li class="tab-item {% if tab == "responses" %}active{% endif %}">
+        <a href="{% url 'student-home' tab='responses' %}">Responses</a>
+    </li>
+    <li class="tab-item {% if tab == "my_information" %}active{% endif %}">
+        <a href="{% url 'student-home' tab='my_information' %}">My Information</a>
+    </li>
+</ul>
